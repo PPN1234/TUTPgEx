@@ -11,6 +11,7 @@ void setup() {
   textAlign(CENTER,CENTER);
   flag = false;
 }
+
 void draw() {
   background(255);
   int now = millis();
