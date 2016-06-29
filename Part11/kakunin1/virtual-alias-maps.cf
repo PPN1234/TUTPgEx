@@ -1,0 +1,6 @@
+hosts    = #RSD
+user     = postfix
+password = tDydoLW1zS90XCLMEGxZWKyPfgZXjrFx
+dbname   = postfix
+
+query = SELECT goto FROM alias WHERE address='%s' AND active = 1
