@@ -1,6 +1,5 @@
 import ddf.minim.*;
 import ddf.minim.analysis.*;
-
 Minim minim;
 AudioPlayer player;
 FFT fft;
@@ -18,8 +17,15 @@ void setup(){
 void draw(){
   fft.forward(player.mix);
 
-  for (int k = 0; k < fft.specSize(); k++){
+  for(int k = 0; k < fft.specSize(); k++){
     int amp = 500;
     fill((fft.getBand(k))*amp);
+    ellipse(random(width),random(height),fft.specSize()-k,fft.specSize()-k);
   }
+}
+
+void stop(){
+  player.close();
+  minim.stop();
+  super.stop();
 }
