@@ -2,15 +2,15 @@ import ddf.minim.*;
 boolean isPaused;
 Minim minim;
 AudioPlayer player;
-AudioMetaData meta;
-int  r = 200;
-float rad = 70;
+PImage img, img2;
+int r;
+float ix = 150;
+float rad = 10;
 
 void setup(){
   size(800, 600);
   minim = new Minim(this);
   player = minim.loadFile("Unicorn.mp3");
-  meta = player.getMetaData();
   player.loop();
   background(1);
   colorMode(RGB, 1);
@@ -30,17 +30,9 @@ void mousePressed() {
 }
 
 void draw() {
-  visualizer(250, width/2, height/2);
   //visualizer(250, width/2, height/2);
-/*
-  textSize(30);
-  fill(#ffffff,10);
-  fill(255, 0, 0, 153);
-  rect(700, 400, 800, 200);
+  visualizer(150, width/2, height/2);
 
-  text("Title:" + meta.title(),-600,-400);
-  text("Artist:" + meta.author(),-600,-375);
-*/
 }
 
 void visualizer(int r, int posx, int posy) {
@@ -49,29 +41,44 @@ void visualizer(int r, int posx, int posy) {
   rect(0, 0, width, height);
   translate(posx, posy);
   noFill();
+  img = loadImage("homuvis.png");
+  imageMode(CENTER);
+  //img2 = loadImage("homutaroooo.png");
 
   stroke(1,100);
   int bsize = player.bufferSize();
-  for (int i = 0; i < bsize - 1; i+=5)
+
+  for (int i = 0; i < bsize; i++)
   {
+    /*
     float x = (r)*cos(i*2*PI/bsize);
     float y = (r)*sin(i*2*PI/bsize);
-    float x2 = (r + player.left.get(i)*50)*cos(i*2*PI/bsize);
-    float y2 = (r + player.left.get(i)*50)*sin(i*2*PI/bsize);
-    line(x, y, x2, y2);
+    float x2 = (r + player.left.get(i)*60)*cos(i*2*PI/bsize);
+    float y2 = (r + player.left.get(i)*60)*sin(i*2*PI/bsize);
+    if(x < 0){
+      if(x > x2){
+        line(x, y, x2, y2);
+      } else {
+        line(x, y, x, y);
+      }
+    } else {
+      if(x < x2){
+        line(x, y, x2, y2);
+      } else {
+        line(x, y, x, y);
+      }
+    }
+    */
+    if(i % 60 == 0){
+      background(0);
+      float ix = (r + 160 + player.left.get(i)*60);
+      if (ix > 250){
+        image(img, 0, 0, ix, ix);
+      } else {
+        image(img, 0, 0, 250, 250);
+      }
+    }
+
   }
-  beginShape();
-  noFill();
-  stroke(1, 70);
-  for (int i = 0; i < bsize; i+=30)
-  {
-    float x2 = (r + player.left.get(i)*10)*cos(i*2*PI/bsize);
-    float y2 = (r + player.left.get(i)*10)*sin(i*2*PI/bsize);
-    vertex(x2, y2);
-    pushStyle();
-    stroke(200);
-    strokeWeight(2);
-    point(x2, y2);
-  }
-  endShape();
+
 }

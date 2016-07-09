@@ -7,7 +7,7 @@ FFT fft;
 void setup(){
   size (513, 200);
   minim = new Minim (this);
-  player = minim.loadFile("music.wav", 1024);
+  player = minim.loadFile("../sounddata/music.wav", 1024);
   fft = new FFT (player.bufferSize(), player.sampleRate());
 
   player.play();
